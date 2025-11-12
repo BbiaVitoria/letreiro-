@@ -1,59 +1,57 @@
-/* d. Defina a largura e altura da tela.
- * e. Determine o espaço livre em torno do letreiro. */
+/* Configuração básica da tela */
 body {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
-    background-color: #f0f0f0;
+    font-family: 'Arial', sans-serif;
+    background-color: #eee;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Altura total da viewport */
+    height: 100vh;
 }
 
-/* Área que simula a "tela" do letreiro */
+/* Área que contém o letreiro */
 .screen-area {
-    width: 80vw; /* Largura da tela: 80% da largura da viewport */
-    height: 100px; /* Altura da tela */
-    border: 3px solid #333;
+    width: 90vw; /* Largura da tela */
+    height: 120px;
+    border: 5px solid #555;
     background-color: #fff;
-    overflow: hidden; /* **Importante:** Esconde o texto quando ele está fora */
+    overflow: hidden; /* Esconde o texto que ultrapassa as bordas */
     position: relative;
-    padding: 20px; /* e. Espaço livre em torno do letreiro (margem interna) */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* O elemento do letreiro */
-.marquee {
+/* O elemento do letreiro (texto) */
+.marquee-text {
     position: absolute;
-    white-space: nowrap; /* Impede que o texto quebre linha */
-    left: 0; /* b. Iniciando da esquerda para a direita. */
     top: 50%;
-    transform: translateY(-50%); /* Centraliza verticalmente */
-    
-    /* g. Controle a velocidade do letreiro usando a duração da animação */
-    animation: slide 10s linear infinite alternate; /* a. Deslizar e voltar (alternate) */
-}
-
-/* f. Defina o alinhamento do texto em torno do letreiro. */
-.text-content {
-    font-size: 2em;
+    transform: translateY(-50%); /* Centralização vertical */
+    white-space: nowrap; /* Impede que o texto quebre linha */
+    font-size: 3em;
     font-weight: bold;
-    color: #007bff;
-    text-transform: uppercase;
-    /* Alinhamento do texto dentro do span, mas a animação o move */
-    text-align: center; 
+    
+    /* ANIMAÇÃO:
+     * - slide-color: nome da animação
+     * - 8s: duração (velocidade - quanto menor, mais rápido)
+     * - linear: tipo de aceleração
+     * - infinite: repetição infinita
+     * - alternate: faz o movimento de 'ir e voltar'
+     */
+    animation: slide-color 8s linear infinite alternate;
 }
 
-/* A animação keyframe */
-@keyframes slide {
+/* 🎨 Keyframes: Define o movimento E a mudança de cor */
+@keyframes slide-color {
+    /* Estado inicial: 0% (Extremidade Esquerda) */
     0% {
-        transform: translateX(0) translateY(-50%); /* Posição inicial (esquerda) */
+        transform: translateX(0) translateY(-50%);
+        color: #007bff; /* Cor Azul na Esquerda */
     }
+    
+    /* Estado final: 100% (Extremidade Direita) */
     100% {
-        /* Desloca o letreiro para a direita. O '-100%' é para garantir que o texto saia completamente da tela,
-         * o '+ 100vw' ajusta para a largura da tela. Vamos usar uma porcentagem da área pai para simplificar. */
-        transform: translateX(calc(80vw - 100% - 40px)) translateY(-50%); 
-        /* 80vw (largura da tela) - 100% (largura do texto) - 40px (padding total) */
+        /* Calcula o deslocamento total para o texto sair da borda direita */
+        transform: translateX(calc(90vw - 100%)) translateY(-50%);
+        color: #dc3545; /* Cor Vermelha na Direita */
     }
 }
