@@ -1,0 +1,59 @@
+/* d. Defina a largura e altura da tela.
+ * e. Determine o espaço livre em torno do letreiro. */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Altura total da viewport */
+}
+
+/* Área que simula a "tela" do letreiro */
+.screen-area {
+    width: 80vw; /* Largura da tela: 80% da largura da viewport */
+    height: 100px; /* Altura da tela */
+    border: 3px solid #333;
+    background-color: #fff;
+    overflow: hidden; /* **Importante:** Esconde o texto quando ele está fora */
+    position: relative;
+    padding: 20px; /* e. Espaço livre em torno do letreiro (margem interna) */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* O elemento do letreiro */
+.marquee {
+    position: absolute;
+    white-space: nowrap; /* Impede que o texto quebre linha */
+    left: 0; /* b. Iniciando da esquerda para a direita. */
+    top: 50%;
+    transform: translateY(-50%); /* Centraliza verticalmente */
+    
+    /* g. Controle a velocidade do letreiro usando a duração da animação */
+    animation: slide 10s linear infinite alternate; /* a. Deslizar e voltar (alternate) */
+}
+
+/* f. Defina o alinhamento do texto em torno do letreiro. */
+.text-content {
+    font-size: 2em;
+    font-weight: bold;
+    color: #007bff;
+    text-transform: uppercase;
+    /* Alinhamento do texto dentro do span, mas a animação o move */
+    text-align: center; 
+}
+
+/* A animação keyframe */
+@keyframes slide {
+    0% {
+        transform: translateX(0) translateY(-50%); /* Posição inicial (esquerda) */
+    }
+    100% {
+        /* Desloca o letreiro para a direita. O '-100%' é para garantir que o texto saia completamente da tela,
+         * o '+ 100vw' ajusta para a largura da tela. Vamos usar uma porcentagem da área pai para simplificar. */
+        transform: translateX(calc(80vw - 100% - 40px)) translateY(-50%); 
+        /* 80vw (largura da tela) - 100% (largura do texto) - 40px (padding total) */
+    }
+}
