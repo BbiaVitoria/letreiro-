@@ -3,14 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Letreiro Simples com Mudança de Cor</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Letreiro Deslizante (Ping-Pong)</title>
+    <style>
+        /* d. Defina a largura e altura da tela e f. Alinhamento */
+        body {
+            display: flex; /* Centraliza vertical e horizontalmente */
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Altura total da viewport (tela) */
+            margin: 0;
+            background-color: #f0f0f0;
+            overflow: hidden; /* Garante que nada fora da área visível apareça */
+        }
+
+        /* Container que define a área de rolagem (largura e altura do "palco") */
+        .letreiro-area {
+            width: 90vw; /* Largura da área de rolagem (90% da viewport) */
+            height: 100px; /* Altura do container */
+            border: 2px solid #333;
+            background-color: #fff;
+            overflow: hidden; /* Essencial para 'cortar' o texto fora desta área */
+            position: relative;
+        }
+
+        /* e. Determine o espaço livre em torno do letreiro */
+        /* O espaço livre é determinado pelo padding do .letreiro-texto e margin do .letreiro-area */
+
+        /* Estrutura do texto deslizante */
+        .letreiro-texto {
+            /* c. O texto deve conter uma frase motivacional, deslizando pela tela, no eixo horizontal. */
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #007bff;
+            white-space: nowrap; /* Impede que o texto quebre linha */
+            position: absolute; /* Permite o movimento de animação */
+            /* Inicia o texto fora da tela à esquerda, para deslizar totalmente. */
+            left: -100%; /* Inicia o texto totalmente fora à esquerda */
+            padding: 20px 0; /* Espaço livre em cima e embaixo do texto */
+
+            /* Aplica a animação */
+            animation: deslizar 10s ease-in-out infinite alternate; 
+            /* 10s: Duração da animação
+               ease-in-out: Suaviza o início e fim de cada ciclo
+               infinite: Repete infinitamente
+               alternate: ESSENCIAL. Faz a animação voltar (bouncing/ping-pong)
+            */
+        }
+
+        /* b. Iniciando da esquerda para a direita. */
+        /* a. O letreiro deve deslizar até o outro lado da tela mas, quando chegar lá, ele deve voltar. */
+        /* Definição da animação deslizar */
+        @keyframes deslizar {
+            0% {
+                transform: translateX(0); /* Posição inicial (com -100% de 'left', o texto estará fora da tela à esquerda) */
+            }
+            100% {
+                /* Move o texto 100% da largura do contêiner mais a sua própria largura,
+                   para garantir que ele saia totalmente do lado direito. 
+                   A unidade 'vw' é usada para uma estimativa visual. Uma forma mais precisa
+                   seria usar 'calc(100% - var(--largura-texto))' mas para letreiros,
+                   'translateX(var(--distancia-maxima))' é comum. Usaremos um valor alto
+                   para garantir que vá até o final da área de rolagem.
+                   
+                   A translação de 100% empurra o elemento para a direita o equivalente
+                   à LARGURA do contêiner PAI (.letreiro-area).
+                */
+                transform: translateX(calc(100% + 100vw)); /* Move para a direita até sair da tela */
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="screen-area">
-        <div class="marquee-text">
-            "Acredite no seu potencial!"
+
+    <div class="letreiro-area">
+        <div class="letreiro-texto">
+            "O sucesso é a soma de pequenos esforços repetidos dia após dia." - Robert Collier
         </div>
     </div>
+
 </body>
 </html>
