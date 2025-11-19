@@ -8,7 +8,7 @@ body {
     display: flex;
     justify-content: center; /* Centraliza o container horizontalmente */
     align-items: center;     /* Centraliza o container verticalmente */
-    background-color: #ffd8d8; /* Fundo claro para contraste */
+    background-color: #f0f0f0; /* Fundo claro para contraste */
 }
 
 /* Container do Letreiro (Tela) */
