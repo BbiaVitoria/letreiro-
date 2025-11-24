@@ -42,3 +42,45 @@ body {
     /* (b) Inicia fora da esquerda da "tela" */
     left: 100%; 
 }
+
+/* ... seu código CSS anterior ... */
+
+#screen-container {
+    /* Mantenha as configurações existentes */
+    width: 80vw;
+    height: 150px;
+    border: 3px solid #0056b3; 
+    background-color: #ffffff;
+    position: relative; 
+    overflow: hidden; 
+    
+    /* ADICIONE flexbox para que a imagem fique embaixo, mantendo a altura total. */
+    /* Para que o letreiro #marquee fique sobre a imagem, o #marquee precisa continuar com position: absolute */
+}
+
+/* Novo estilo para a imagem */
+#banner-image {
+    /* Para que a imagem fique no fundo do container, sob o letreiro */
+    position: absolute;
+    bottom: 0; /* Coloca a imagem na parte inferior */
+    left: 0;
+    width: 100%; /* Faz a imagem preencher a largura do container */
+    max-height: 100%; /* Garante que a imagem não ultrapasse a altura do container */
+    object-fit: cover; /* Recorta a imagem para cobrir toda a área sem distorção */
+    z-index: 0; /* Garante que a imagem fique por baixo do letreiro (z-index padrão do #marquee é 1) */
+}
+
+#marquee {
+    /* Mantenha as configurações existentes */
+    padding: 20px;
+    /* ... outros estilos ... */
+    
+    position: absolute;
+    top: 50%; 
+    transform: translateY(-50%); 
+    left: 100%; 
+    
+    /* ADICIONE z-index para garantir que o texto animado fique acima da imagem */
+    z-index: 10; 
+    background-color: rgba(255, 255, 255, 0.7); /* Adicione um fundo semi-transparente para o texto se destacar sobre a imagem */
+}
