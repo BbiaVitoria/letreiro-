@@ -3,14 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Letreiro Animado</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Letreiro Motivacional Rosa e Branco</title>
+    <!-- Incluindo Tailwind CSS para estilização -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Definindo a fonte "Inter" como padrão */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fce7f3; /* Rosa muito claro para o fundo [Tom de Rosa] */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Altura total da tela */
+            margin: 0;
+            overflow: hidden; /* Evita barras de rolagem desnecessárias */
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="marquee-text">
-            🌟 **Acredite no seu potencial. Cada passo, por menor que seja, te leva mais perto do seu sonho.** 🚀
+
+    <!--
+        [d] Largura e altura da tela/container:
+        O container principal (#screen) define a área de visualização.
+        [e] Espaço livre em torno do letreiro:
+        O `max-w-4xl` no container e o `p-8` no body garantem espaço livre.
+    -->
+    <div id="screen" class="bg-white shadow-xl rounded-2xl w-11/12 max-w-4xl h-32 overflow-hidden relative border-4 border-pink-400">
+        
+        <!-- O letreiro em si. O alinhamento do texto é centralizado [f]. -->
+        <div id="marquee" class="absolute h-full flex items-center justify-center whitespace-nowrap text-xl md:text-3xl font-extrabold text-white bg-pink-500 rounded-full px-8 py-3 shadow-2xl shadow-pink-300 transform transition-all duration-100 ease-linear tracking-wide">
+            <!-- [c] Frase motivacional -->
+            "Acredite na magia dos seus começos. Você é incrível!"
         </div>
+
     </div>
+
+    <script>
+        // Variáveis globais para o letreiro e animação
+        const screen = document.getElementById('screen');
+        const marquee = document.getElementById('marquee');
+        
+        let positionX = 0; // Posição horizontal atual do letreiro
+        let velocityX = 3; // Aumentei um pouco a velocidade (pixels por frame)
+        
+        // Função principal de animação
+        function animateMarquee() {
+            // 1. Calcular as dimensões relevantes
+            const screenWidth = screen.clientWidth;
+            const marqueeWidth = marquee.clientWidth;
+            
+            // Ponto de início (esquerda) e Ponto de parada (direita)
+            const minX = 0;
+            const maxX = screenWidth - marqueeWidth;
+
+            // 2. Atualizar a posição [b] Inicia da esquerda para a direita (positiva)
+            positionX += velocityX;
+
+            // 3. Verificar os limites e inverter a direção [a] Desliza e volta (efeito ping-pong)
+            if (positionX > maxX) {
+                // Chegou na direita, inverte para ir para a esquerda
+                positionX = maxX;
+                velocityX = -Math.abs(velocityX); // Força a velocidade negativa
+            } else if (positionX < minX) {
+                // Chegou na esquerda, inverte para ir para a direita
+                positionX = minX;
+                velocityX = Math.abs(velocityX); // Força a velocidade positiva
+            }
+
+            // 4. Aplicar a transformação de deslocamento
+            marquee.style.left = `${positionX}px`;
+
+            // 5. Agendar o próximo frame
+            requestAnimationFrame(animateMarquee);
+        }
+
+        // Adiciona um listener para iniciar a animação após o carregamento completo do DOM
+        window.onload = () => {
+             // Define a posição inicial na esquerda (0) antes de iniciar a animação
+             marquee.style.left = '0px'; 
+             animateMarquee(); // Inicia o loop de animação
+        };
+        
+        // Opcional: Recalcula a posição máxima e reinicia se a tela for redimensionada
+        window.addEventListener('resize', () => {
+             // Garante que a posição atual seja ajustada para não sair dos novos limites
+             const screenWidth = screen.clientWidth;
+             const marqueeWidth = marquee.clientWidth;
+             const maxX = screenWidth - marqueeWidth;
+             
+             if (positionX > maxX) {
+                 positionX = maxX;
+                 marquee.style.left = `${positionX}px`;
+             }
+        });
+
+    </script>
 </body>
 </html>
