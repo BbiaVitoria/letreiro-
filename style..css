@@ -1,0 +1,44 @@
+body {
+    /* (d) Define a largura e altura da tela e remove margens padrão */
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center; /* Centraliza o container na horizontal */
+    align-items: center; /* Centraliza o container na vertical */
+    background-color: #f0f0f0; /* Cor de fundo suave */
+    overflow: hidden; /* Garante que nada fora do body seja visível */
+}
+
+#screen-container {
+    /* Define a área visível do letreiro */
+    width: 80vw; /* 80% da largura da viewport como "tela" do letreiro */
+    height: 150px;
+    border: 3px solid #0056b3; /* Borda para visualização da "tela" */
+    background-color: #ffffff;
+    position: relative; /* Essencial para que o letreiro filho (marquee) se posicione em relação a ele */
+    overflow: hidden; /* (d) Oculta o texto quando ele estiver fora desta área */
+}
+
+#marquee {
+    /* O letreiro em si */
+    /* (f) Define o alinhamento do texto (em torno do letreiro) - Aqui ele preenche o letreiro */
+    /* (e) Determina o espaço livre em torno do letreiro (interno) */
+    padding: 20px;
+    
+    /* Estilização do texto (c) Frase motivacional */
+    font-family: 'Arial', sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    color: #cc0000;
+    white-space: nowrap; /* Impede que o texto quebre linha */
+    text-align: center; /* (f) Alinhamento do texto interno */
+
+    /* Posicionamento inicial para o JS animar */
+    position: absolute;
+    top: 50%; /* Alinha o topo do letreiro ao meio do container */
+    transform: translateY(-50%); /* Ajusta para centralizar verticalmente */
+
+    /* (b) Inicia fora da esquerda da "tela" */
+    left: 100%; 
+}
